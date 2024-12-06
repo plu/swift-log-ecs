@@ -5,9 +5,6 @@
 //  Created by Ross Butler on 09/05/2024.
 //
 
-#if canImport(_Backtracing)
-import _Backtracing
-#endif
 import Foundation
 import Logging
 
@@ -26,11 +23,6 @@ public extension Logger {
             .errorType: errorType,
             .errorMessage: error.localizedDescription
         ]
-#if canImport(_Backtracing)
-        if let trace = try? Backtrace.capture(algorithm: .auto).symbolicated() {
-            json[.errorStackTrace] = trace.description
-        }
-#endif
         let mappedJSON = json.mapKeys { // Map ECSLogFields to Strings.
             $0.description
         }
